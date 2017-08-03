@@ -7,7 +7,7 @@ $ErrorActionPreference = 'Continue'
 #Set script location
 Set-Location $PSScriptRoot
 
-Write-Information -MessageData "$env:COMPUTERNAME : Build of manifest started" -InformationAction Continue
+Write-Information -MessageData "$env:COMPUTERNAME : Build of manifest|psd1 started" -InformationAction Continue
 
 #Query the name of the folder one level up
 [string]$ModuleName = (Get-ChildItem ..\ ).psparentpath[-1].split('\')[-1]
