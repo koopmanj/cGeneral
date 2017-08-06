@@ -188,7 +188,16 @@ function get-cModule {
 Copy-cInitialSetting
 Get-cModule
 Set-Location -Path ((Get-ItemProperty -Path 'hkcu:\Software\Microsoft\OneDrive\' -Name UserFolder).UserFolder + "\Documenten\Scripting\Powershell\Modules")
-ipmo posh-git
+
+$error.Clear()
+Import-Module posh-git -ErrorVariable IpmoErr
+if($Error)
+{
+    Find-Module posh-git | Install-Module -Verbose -Force
+    #skip if the source and destination writetime are equal
+    Write-Verbose -Message "$env:COMPUTERNAME : Installing module posh-git cause it was not found on disk" -Verbose
+}
+
 <#
     code below should executed to create powershell profile directory files, 
     so it should be called manual the first time

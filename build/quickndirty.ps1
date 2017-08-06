@@ -4,7 +4,8 @@ Write-Verbose -Message "$env:COMPUTERNAME : dotsourcing the cBuildManifest" -Ver
 . .\cBuildManifest.ps1
 
 Write-Verbose -Message "$env:COMPUTERNAME : git commit -am 'New Version'" -Verbose
-git commit -am 'New version'
+$CommitMessage = Read-Host 'Provide a git commit message'
+git commit -am $CommitMessage
 
 $remote = git remote 
 Write-Verbose -Message "$env:COMPUTERNAME : git remote(s) : $remote" -Verbose
