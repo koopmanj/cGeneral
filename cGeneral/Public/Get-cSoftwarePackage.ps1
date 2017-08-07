@@ -13,15 +13,15 @@ function Get-cSoftwarePackage {
     )
 
     #Query for install software reg paths
-    $InstalledSoftware = Get-ChildItem -Path $InstalledSoftwareRegPaths
+    $InstalledSoftware = Get-ChildItem -Path $SoftwareRegPaths
     
     #Quering all installed packages
     $InstalledPackages = @()
-    foreach ($SoftwarePackage in $UninstallSoftwarePackageName) {
+    foreach ($SoftwarePackage in $SoftwarePackageName) {
         Write-Verbose -Message "$env:COMPUTERNAME : Lookup for package : $SoftwarePackage" -Verbose
         $InstalledPackages += ($InstalledSoftware | Get-ItemProperty | Where-Object {$_.displayname -match $SoftwarePackage})
         if($InstalledPackages.DisplayName -notmatch $SoftwarePackage){
-            Write-Warning -Message "$env:COMPUTERNAME : No package found : $SoftwarePackage" -Verbose        
+            Write-Warning -Message "$env:COMPUTERNAME : No package found   : $SoftwarePackage" -Verbose        
         }
     }
     Write-Verbose -Message "$env:COMPUTERNAME : Packages found : $($InstalledPackages.DisplayName|out-string)" -Verbose
