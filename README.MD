@@ -1,12 +1,17 @@
 ## cGeneral ##
-This **cGeneral** module contains 4 functions that should provide assistance for automation purposes.
+This **cGeneral** module contains 9 functions that should provide assistance for automation purposes.
 
 ### Functions ###
 The functions this modules contains coexist of the following names:
 
+Get-cADUser
+Get-cSoftwarePackage
 Get-cURL
 New-cVerboseMessage
+Remove-cSoftwarePackage
 Rename-cContent
+Start-cService
+Stop-cService
 Test-cAdministrator
 
 
@@ -24,6 +29,110 @@ The installation of this module can be achieved by registering a NuGet repositor
 
 
 ### Detailed information about the functions###
+
+NAME
+    Get-cADUser
+    
+SYNOPSIS
+    Get-cADUser query domain for the provided group, and return the group users
+    
+    
+SYNTAX
+    Get-cADUser [[-DomainGroup] <String>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -DomainGroup <String>
+        
+        Required?                    false
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-cADUser -DomainGroup ''
+    
+    
+    
+    
+    
+    
+    
+RELATED LINKS
+
+---
+
+NAME
+    Get-cSoftwarePackage
+    
+SYNOPSIS
+    Get-cSoftwarePackage will query the microsoft registry and search for the software(parametervalue) you provide.
+    
+    
+SYNTAX
+    Get-cSoftwarePackage [[-SoftwarePackageName] <Object[]>] [[-SoftwareRegPaths] <Object[]>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    Get-cSoftwarePackage will accept multiple input param values and search the host for matching software
+    
+
+PARAMETERS
+    -SoftwarePackageName <Object[]>
+        
+        Required?                    false
+        Position?                    1
+        Default value                ('Veeam Agent for Microsoft Windows', 'Microsoft SQL Server 2012 Express LocalDB', 'Battle.net')
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    -SoftwareRegPaths <Object[]>
+        
+        Required?                    false
+        Position?                    2
+        Default value                ('HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 
+        'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall')
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Get-cSoftwarePackage
+    
+    
+    
+    
+    
+    
+    
+RELATED LINKS
+
+---
 
 NAME
     Get-cURL
@@ -115,6 +224,73 @@ RELATED LINKS
 ---
 
 NAME
+    Remove-cSoftwarePackage
+    
+SYNOPSIS
+    Remove-cSoftwarePackage will require the itemproperties DisplayName and UninstallString to successfully uninstall a package, it can be achieved easily by 
+    executing Get-cSoftwarePackage
+    
+    
+SYNTAX
+    Remove-cSoftwarePackage [[-InstalledSoftware] <Object>] [-Whatif] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    Remove-cSoftwarePackage has a whatif statement, that will return what arguments will be executed if whatif was not supplied, ofc it will erase your package 
+    from disk.
+    
+
+PARAMETERS
+    -InstalledSoftware <Object>
+        
+        Required?                    false
+        Position?                    1
+        Default value                (Get-cSoftwarePackage)
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    -Whatif [<SwitchParameter>]
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Remove-cSoftwarePackage -whatif
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS C:\>Remove-cSoftwarePackage
+    
+    
+    
+    
+    
+    
+    
+RELATED LINKS
+
+---
+
+NAME
     Rename-cContent
     
 SYNOPSIS
@@ -172,6 +348,116 @@ NOTES
     -------------------------- EXAMPLE 1 --------------------------
     
     PS C:\>Replace-Content -Path "D:\jko\_Jobs" -FindString "mx.internal.asp4all.nl" -ReplaceString "smarthost-asd2.solvinity.net"
+    
+    
+    
+    
+    
+    
+    
+RELATED LINKS
+
+---
+
+NAME
+    Start-cService
+    
+SYNOPSIS
+    Start-cService will start the (list) of services you provide, and configure them to the StartType state
+    
+    
+SYNTAX
+    Start-cService [[-Service] <String[]>] [[-StartType] <Object>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Service <String[]>
+        
+        Required?                    false
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    -StartType <Object>
+        
+        Required?                    false
+        Position?                    2
+        Default value                automatic
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Start-cService -Service bits -StartType automatic
+    
+    
+    
+    
+    
+    
+    
+RELATED LINKS
+
+---
+
+NAME
+    Stop-cService
+    
+SYNOPSIS
+    Stop-cService will stop the (list) of services you provide, and configure them to the StartType state
+    
+    
+SYNTAX
+    Stop-cService [[-Service] <String[]>] [[-StartType] <Object>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    
+
+PARAMETERS
+    -Service <String[]>
+        
+        Required?                    false
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    -StartType <Object>
+        
+        Required?                    false
+        Position?                    2
+        Default value                manual
+        Accept pipeline input?       false
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS C:\>Stop-cService -Service bits -StartType manual
     
     
     
