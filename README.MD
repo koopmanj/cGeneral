@@ -42,8 +42,9 @@ SYNOPSIS
     
     
 SYNTAX
-    Add-cADForestTrust [-DomainControllerCustomerForest] <String> [-DomainControllerCustomerForestCredentials] <PSCredential> [-AuthoritativeAdminCredentials] <PSCredential> 
-    [-AuthoritativeForest] <String> [-TrustDirection] <String> [<CommonParameters>]
+    Add-cADForestTrust [-DomainControllerCustomerForest] <String> [-DomainControllerCustomerForestCredentials] 
+    <PSCredential> [-AuthoritativeAdminCredentials] <PSCredential> [-AuthoritativeForest] <String> [-TrustDirection] 
+    <String> [<CommonParameters>]
     
     
 DESCRIPTION
@@ -63,7 +64,8 @@ PARAMETERS
         
         Required?                    true
         Position?                    2
-        Default value                (Get-Credential -UserName (whoami.exe) -Message 'Provide credentials for customer domain')
+        Default value                (Get-Credential -UserName (whoami.exe) -Message 'Provide credentials for customer 
+        domain')
         Accept pipeline input?       false
         Accept wildcard characters?  false
         
@@ -71,7 +73,8 @@ PARAMETERS
         
         Required?                    true
         Position?                    3
-        Default value                (Get-Credential -UserName (whoami.exe) -Message 'Provide credentials for authoritative domain')
+        Default value                (Get-Credential -UserName (whoami.exe) -Message 'Provide credentials for 
+        authoritative domain')
         Accept pipeline input?       false
         Accept wildcard characters?  false
         
@@ -106,9 +109,11 @@ OUTPUTS
     PS C:\>Add-ADForestTrust   -DomainControllerCustomerForest 'winxxxxvm' `
     
     -DomainControllerCustomerForestCredentials (Get-Credential -UserName ('customer\'+(whoami.exe).split('\')[1]) `
-                        -Message 'Provide credentials for the incoming forest domain, so the customer domain credentials') `
+                        -Message 'Provide credentials for the incoming forest domain, so the customer domain 
+    credentials') `
                         -AuthoritativeForest 'supportasp.local' `
-                        -AuthoritativeAdminCredentials (Get-Credential -UserName (whoami.exe) -Message 'Provide credentials for authoritative domain') `
+                        -AuthoritativeAdminCredentials (Get-Credential -UserName (whoami.exe) -Message 'Provide 
+    credentials for authoritative domain') `
                         -TrustDirection 'Outbound'
     
     
@@ -118,8 +123,10 @@ OUTPUTS
     
     PS C:\>Add-ADForestTrust   -DomainControllerCustomerForest 'win****vm'
     
-    -DomainControllerCustomerForestCredentials (Get-Credential -UserName qurrent\user -Message 'Provide credentials for the incoming forest domain, so the customer domain credentials') 
-                        -AuthoritativeForest 'supportasp.local' -AuthoritativeAdminCredentials (Get-Credential -UserName jkoopman-a -Message 'Provide credentials for authoritative domain') 
+    -DomainControllerCustomerForestCredentials (Get-Credential -UserName qurrent\user -Message 'Provide credentials 
+    for the incoming forest domain, so the customer domain credentials') 
+                        -AuthoritativeForest 'supportasp.local' -AuthoritativeAdminCredentials (Get-Credential 
+    -UserName jkoopman-a -Message 'Provide credentials for authoritative domain') 
                         -TrustDirection 'Outbound'
     
     
@@ -185,11 +192,13 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-cRemoteProgram [[-ComputerName] <String[]>] [[-Property] <String[]>] [-ExcludeSimilar] [-SimilarWord <Int32>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Get-cRemoteProgram [[-ComputerName] <String[]>] [[-Property] <String[]>] [-ExcludeSimilar] [-SimilarWord <Int32>] 
+    [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    This function generates a list by querying the registry and returning the installed programs of a local or remote computer.
+    This function generates a list by querying the registry and returning the installed programs of a local or remote 
+    computer.
     
 
 PARAMETERS
@@ -203,7 +212,8 @@ PARAMETERS
         Accept wildcard characters?  false
         
     -Property <String[]>
-        Additional values to be loaded from the registry. Can contain a string or an array of string that will be attempted to retrieve from the registry for each program entry
+        Additional values to be loaded from the registry. Can contain a string or an array of string that will be 
+        attempted to retrieve from the registry for each program entry
         
         Required?                    false
         Position?                    1
@@ -212,8 +222,10 @@ PARAMETERS
         Accept wildcard characters?  false
         
     -ExcludeSimilar [<SwitchParameter>]
-        This will filter out similar programnames, the default value is to filter on the first 3 words in a program name. If a program only consists of less words it is excluded and it 
-        will not be filtered. For example if you Visual Studio 2015 installed it will list all the components individually, using -ExcludeSimilar will only display the first entry.
+        This will filter out similar programnames, the default value is to filter on the first 3 words in a program 
+        name. If a program only consists of less words it is excluded and it will not be filtered. For example if you 
+        Visual Studio 2015 installed it will list all the components individually, using -ExcludeSimilar will only 
+        display the first entry.
         
         Required?                    false
         Position?                    named
@@ -222,7 +234,8 @@ PARAMETERS
         Accept wildcard characters?  false
         
     -SimilarWord <Int32>
-        This parameter only works when ExcludeSimilar is specified, it changes the default of first 3 words to any desired value.
+        This parameter only works when ExcludeSimilar is specified, it changes the default of first 3 words to any 
+        desired value.
         
         Required?                    false
         Position?                    named
@@ -291,7 +304,8 @@ NOTES
     PS C:\>Get-RemoteProgram -ComputerName Server01 -Property DisplayVersion,VersionMajor
     
     Description:
-    Will gather the list of programs from Server01 and attempts to retrieve the displayversion and versionmajor subkeys from the registry for each installed program
+    Will gather the list of programs from Server01 and attempts to retrieve the displayversion and versionmajor 
+    subkeys from the registry for each installed program
     
     
     
@@ -301,7 +315,8 @@ NOTES
     PS C:\>'server01','server02' | Get-RemoteProgram -Property Uninstallstring
     
     Description
-    Will retrieve the installed programs on server01/02 that are passed on to the function through the pipeline and also retrieves the uninstall string for each program
+    Will retrieve the installed programs on server01/02 that are passed on to the function through the pipeline and 
+    also retrieves the uninstall string for each program
     
     
     
@@ -311,8 +326,9 @@ NOTES
     PS C:\>'server01','server02' | Get-RemoteProgram -Property Uninstallstring -ExcludeSimilar -SimilarWord 4
     
     Description
-    Will retrieve the installed programs on server01/02 that are passed on to the function through the pipeline and also retrieves the uninstall string for each program. Will only display 
-    a single entry of a program of which the first four words are identical.
+    Will retrieve the installed programs on server01/02 that are passed on to the function through the pipeline and 
+    also retrieves the uninstall string for each program. Will only display a single entry of a program of which the 
+    first four words are identical.
     
     
     
@@ -343,7 +359,8 @@ PARAMETERS
         
         Required?                    false
         Position?                    1
-        Default value                ('Veeam Agent for Microsoft Windows', 'Microsoft SQL Server 2012 Express LocalDB', 'Battle.net')
+        Default value                ('Veeam Agent for Microsoft Windows', 'Microsoft SQL Server 2012 Express 
+        LocalDB', 'Battle.net')
         Accept pipeline input?       false
         Accept wildcard characters?  false
         
@@ -351,7 +368,8 @@ PARAMETERS
         
         Required?                    false
         Position?                    2
-        Default value                ('HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall')
+        Default value                ('HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall', 
+        'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall')
         Accept pipeline input?       false
         Accept wildcard characters?  false
         
@@ -439,7 +457,8 @@ SYNTAX
     
     
 DESCRIPTION
-    This function will show all ports configured within the systems registry so we can ensure we open firewalls ports properly with a minimum set
+    This function will show all ports configured within the systems registry so we can ensure we open firewalls ports 
+    properly with a minimum set
     
 
 PARAMETERS
@@ -471,7 +490,8 @@ NOTES
     
     PS C:\>$providecredsofdc = get-credential
     
-    invoke-command    -computername Nameofdomaincontroller -Credential $providecredsofdc -scriptblock ${function:get-DynamicPortRange}
+    invoke-command    -computername Nameofdomaincontroller -Credential $providecredsofdc -scriptblock 
+    ${function:get-DynamicPortRange}
     Will show NTDS, Netlogon, Internet, Dynamic ports of the specified system
     
     
@@ -527,7 +547,8 @@ NAME
     Remove-cSoftwarePackage
     
 SYNOPSIS
-    Remove-cSoftwarePackage will require the itemproperties DisplayName and UninstallString to successfully uninstall a package, it can be achieved easily by executing Get-cSoftwarePackage
+    Remove-cSoftwarePackage will require the itemproperties DisplayName and UninstallString to successfully uninstall 
+    a package, it can be achieved easily by executing Get-cSoftwarePackage
     
     
 SYNTAX
@@ -535,7 +556,8 @@ SYNTAX
     
     
 DESCRIPTION
-    Remove-cSoftwarePackage has a whatif statement, that will return what arguments will be executed if whatif was not supplied, ofc it will erase your package from disk.
+    Remove-cSoftwarePackage has a whatif statement, that will return what arguments will be executed if whatif was not 
+    supplied, ofc it will erase your package from disk.
     
 
 PARAMETERS
@@ -645,7 +667,8 @@ NOTES
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\>Replace-Content -Path "D:\jko\_Jobs" -FindString "mx.internal.asp4all.nl" -ReplaceString "smarthost-asd2.solvinity.net"
+    PS C:\>Replace-Content -Path "D:\jko\_Jobs" -FindString "mx.internal.asp4all.nl" -ReplaceString 
+    "smarthost-asd2.solvinity.net"
     
     
     
@@ -672,7 +695,8 @@ alertSet                 :
 description              : 
 examples                 : 
 Synopsis                 : 
-                           Set-cSystemCenterConfiguration [[-SystemCenterGroupName] <Object>] [[-SystemCenterGateWayHostname] <Object>]
+                           Set-cSystemCenterConfiguration [[-SystemCenterGroupName] <Object>] 
+                           [[-SystemCenterGateWayHostname] <Object>]
                            
 ModuleName               : cGeneral
 nonTerminatingErrors     : 

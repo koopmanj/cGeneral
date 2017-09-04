@@ -104,12 +104,7 @@ function Set-cSystemCenterConfiguration {
         New-Item -Path "HKLM:\\SYSTEM\ControlSet001\Services\HealthService\Parameters\Management Groups\$SystemCenterGroupName\SSDB\References" -Name '63745834-3e54-936c-1b47-2d632054a177' -ItemType directory -Force
         New-Item -Path "HKLM:\\SYSTEM\ControlSet001\Services\HealthService\Parameters\Management Groups\$SystemCenterGroupName\SSDB\References" -Name '92f8f803-0763-f491-2480-274bfc4126f9' -ItemType directory -Force
         New-Item -Path "HKLM:\\SYSTEM\ControlSet001\Services\HealthService\Parameters\Management Groups\$SystemCenterGroupName\SSDB"            -Name 'SSIDs'                                -ItemType directory -Force
+        New-ItemProperty -Path "HKLM:\\SYSTEM\ControlSet001\Services\HealthService\Parameters\Management Groups\$SystemCenterGroupName\SSDB\References\63745834-3e54-936c-1b47-2d632054a177" -Name '(Default)' -Value '01020202020202020202020202020202020202020200000000000000000000000000000000000000'
+        New-ItemProperty -Path "HKLM:\\SYSTEM\ControlSet001\Services\HealthService\Parameters\Management Groups\$SystemCenterGroupName\SSDB\References\92f8f803-0763-f491-2480-274bfc4126f9" -Name '(Default)' -Value '01020202020202020202020202020202020202020200000000000000000000000000000000000000'
     }
-
-
-    #[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\HealthService\Parameters\Management Groups\OMSMG01\SSDB\References\63745834-3e54-936c-1b47-2d632054a177]
-    #@="01020202020202020202020202020202020202020200000000000000000000000000000000000000"
-
-    #[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\HealthService\Parameters\Management Groups\OMSMG01\SSDB\References\92f8f803-0763-f491-2480-274bfc4126f9]
-    #@="01020202020202020202020202020202020202020200000000000000000000000000000000000000"
 }
