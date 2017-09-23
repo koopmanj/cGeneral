@@ -668,7 +668,7 @@ NOTES
     -------------------------- EXAMPLE 1 --------------------------
     
     PS C:\>Replace-Content -Path "D:\jko\_Jobs" -FindString "mx.internal.asp4all.nl" -ReplaceString 
-    "smarthost-asd2.solvinity.net"
+    "smarthost-asd2.*.net"
     
     
     

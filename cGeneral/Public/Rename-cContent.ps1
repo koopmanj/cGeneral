@@ -4,7 +4,7 @@
 .DESCRIPTION
    This function will query the specified path and replace the findstring with a value of the replacestring
 .EXAMPLE
-   Replace-Content -Path "D:\jko\_Jobs" -FindString "mx.internal.asp4all.nl" -ReplaceString "smarthost-asd2.solvinity.net"
+   Replace-Content -Path "D:\jko\_Jobs" -FindString "mx.internal.asp4all.nl" -ReplaceString "smarthost-asd2.*.net"
 .NOTES
    General notes
 .COMPONENT

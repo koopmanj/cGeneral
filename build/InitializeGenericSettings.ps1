@@ -166,7 +166,7 @@ function get-cModule {
                 Write-Verbose -Message "$env:COMPUTERNAME : Copying files from Onedrive module, cause of non-existance at destination" -Verbose
                 Copy-cModule
             }
-            elseif (!($Result)) {
+            elseif ($Result -eq $error) {
                 write-host $Result
                 #copy them over if they are newer at the source
                 Write-Verbose -Message "$env:COMPUTERNAME : Copying files from Onedrive module, cause of changes made within it's source" -Verbose
