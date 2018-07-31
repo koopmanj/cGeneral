@@ -6,7 +6,7 @@
 .EXAMPLE
    Remove-cSoftwarePackage -whatif
 .EXAMPLE
-  Remove-cSoftwarePackage
+   Remove-cSoftwarePackage
 #>
 function Remove-cSoftwarePackage {
     param(

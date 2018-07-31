@@ -115,9 +115,6 @@ function Copy-cInitialSetting {
             Write-Verbose -Message "$env:COMPUTERNAME : Initial settings loaded from Onedrive path, and in sync with the cGeneral module path" -Verbose
         }
     }
-    
-    end {
-    }
 }
 
 #region Test if a newer version of sGeneral is at the OneDrive location, if so just copy it over
@@ -158,10 +155,10 @@ function get-cModule {
     #Write-Verbose -Message "$env:COMPUTERNAME : Visible  OneDrive Modules`t: $($OneDriveModuleNames.name)"      -Verbose
     if (Test-Administrator) {
         for ($i = 0; $i -lt $SourceWriteTimes.Count; $i++) {
-            $Result = ((Compare-Object -IncludeEqual $SourceWriteTimes[$i] $DestinationWriteTimes[$i]).sideindicator[$i] -ne '==')
+            $Result = ((Compare-Object -IncludeEqual $SourceWriteTimes[$i] $DestinationWriteTimes[$i] -ErrorVariable DestNotExists).sideindicator[$i] -ne '==')
  
             #Check if modules is present at source location
-            if (!(Test-Path $DestinationModulePath)) {
+            if ($DestNotExists) {
                 #copy them over if not they don't exist
                 Write-Verbose -Message "$env:COMPUTERNAME : Copying files from Onedrive module, cause of non-existance at destination" -Verbose
                 Copy-cModule
@@ -196,7 +193,9 @@ if($Error)
     Find-Module posh-git | Install-Module -Verbose -Force
     #skip if the source and destination writetime are equal
     Write-Verbose -Message "$env:COMPUTERNAME : Installing module posh-git cause it was not found on disk" -Verbose
-}
+} else {
+    Write-Verbose -Message "$env:COMPUTERNAME : posh-git inserted" -Verbose
+} 
 
 <#
     code below should executed to create powershell profile directory files, 
@@ -224,20 +223,27 @@ function Set-GeneralModulePointer {
         Write-Verbose -Message "$env:COMPUTERNAME : Onedrive path : $OneDriveGeneralModuleScript" -Verbose
         
         $ProfileTypes.Values.ForEach( {
+                Write-Verbose -Message "$env:COMPUTERNAME : Test path : $TruncedProfile$PSItem" -Verbose
+                
                 if (Test-Path -Path $TruncedProfile$PSItem) {
                     #controleer of het bestand een verwijzing heeft naar dit bestand
                     $FileContent = Get-Content $TruncedProfile$PSItem
-                    if ($FileContent | Select-String -Pattern $OneDriveGeneralModuleScript.fullname ) {
+                    Write-Verbose -Message "$env:COMPUTERNAME : Content of the file : $FileContent" -Verbose
+
+                    if ($FileContent | Select-String -Pattern $OneDriveGeneralModuleScript ) {
                         Write-Verbose -Message "$env:COMPUTERNAME : Pointers to this file are set within : $TruncedProfile$PSItem" -Verbose
                     }
                 }
                 else {
+                    Write-Verbose -Message "$env:COMPUTERNAME : Create a new file : $TruncedProfile$PSItem" -Verbose
+                    
                     #maak nieuw bestand en verwijs naar dit bestand
                     new-item -ItemType File -Path $TruncedProfile$PSItem
-                    $TruncedProfile + $PSItem | Add-Content $OneDriveGeneralModuleScript.fullname
-                    Write-Verbose -Message "$env:COMPUTERNAME : Created a new file : $TruncedProfile$PSItem `n
-                Added content to the file : $($OneDriveGeneralModuleScript.fullname)
-                " -Verbose
+                    
+                    Write-Verbose -Message "$env:COMPUTERNAME : $($TruncedProfile + $PSItem) : Add-Content $OneDriveGeneralModuleScript" -Verbose
+                    $(". ""$OneDriveGeneralModuleScript""" ) > ($TruncedProfile + $PSItem )
+                    
+                    Write-Verbose -Message "$env:COMPUTERNAME : Created a new file : $TruncedProfile$PSItem `n Added content to the file : $($OneDriveGeneralModuleScript)" -Verbose
                 }
                 write-host $TruncedProfile$PSItem
             })
